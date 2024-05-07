@@ -588,3 +588,13 @@ func assertMetric(
 	}
 	require.Fail(t, msgFmt("metric not found"))
 }
+
+func TestCreateScopeWithDefaultOptions(t *testing.T) {
+	r := NewReporter(Options{})
+	tally.NewRootScope(tally.ScopeOptions{
+		Prefix:         "empty",
+		Tags:           map[string]string{"env": "dev"},
+		CachedReporter: r,
+		Separator:      DefaultSeparator,
+	}, 1*time.Second)
+}
